@@ -3,59 +3,22 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <array>
+#include "game_table.h"
 
-#ifdef __linux__
-#include <X11/Xlib.h>
-#endif
-
-class SomeClass {
-public:
-    explicit SomeClass(int) {}
-};
-
-SomeClass *getC() {
-    return new SomeClass{2};
-}
 
 int main() {
-    #ifdef __linux__
-    XInitThreads();
-    #endif
-
-    SomeClass *c = getC();
-    std::cout << c << "\n";
-    delete c;
-
-    sf::RenderWindow window;
-    // NOTE: sync with env variable APP_WINDOW from .github/workflows/cmake.yml:30
-    window.create(sf::VideoMode({800, 700}), "My Window", sf::Style::Default);
-    window.setVerticalSyncEnabled(true);
-    //window.setFramerateLimit(60);
-
-    while(window.isOpen()) {
-        sf::Event e;
-        while(window.pollEvent(e)) {
-            switch(e.type) {
-            case sf::Event::Closed:
+    int width=800,height=800;
+    sf::RenderWindow window(sf::VideoMode(width,height), "My window");
+    while (window.isOpen()){
+        sf::Event event;
+        while(window.pollEvent(event)){
+            if(event.type==sf::Event::Closed)
                 window.close();
-                break;
-            case sf::Event::Resized:
-                std::cout << "New width: " << window.getSize().x << '\n'
-                          << "New height: " << window.getSize().y << '\n';
-                break;
-            case sf::Event::KeyPressed:
-                std::cout << "Received key " << (e.key.code == sf::Keyboard::X ? "X" : "(other)") << "\n";
-                break;
-            default:
-                break;
-            }
         }
-        using namespace std::chrono_literals;
-        std::this_thread::sleep_for(300ms);
-
-        window.clear();
-        window.display();
+        std::array <int,200> m{0};
+        game_table game;
+        game.play_game(window);
     }
-
     return 0;
 }
