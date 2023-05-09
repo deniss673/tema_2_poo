@@ -4,7 +4,7 @@
 
 #include "pieces.h"
 
-pieces::pieces(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_,int nume_,int rotate_, int number_rotate_, std::vector<int> big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},nume{nume_},rotate{rotate_},number_rotate{number_rotate_},
+pieces::pieces(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_,int rotate_, int number_rotate_, std::vector<int> big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},rotate{rotate_},number_rotate{number_rotate_},
                                                                                                                                                                                  big_shape{big_shape_}{}
 pieces::pieces() {}
 
@@ -65,9 +65,7 @@ sf::Vector2i pieces::get_position() {
     return position;
 }
 
-int pieces::numele() {
-    return nume;
-}
+
 
 void pieces::set_position(const sf::Vector2i &pos) {
     position = pos;
@@ -95,10 +93,6 @@ void pieces::set_rotate(int rotate_) {
 
 void pieces::set_number_rotate(int number) {
     number_rotate=number;
-}
-
-void pieces::set_nume(int number) {
-    nume = number;
 }
 
 int pieces::get_number_rotate() {

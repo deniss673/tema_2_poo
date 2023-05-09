@@ -15,7 +15,6 @@ private:
     std::vector<int> shape;
     int size_o;
     int size_v;
-    int nume;
     int rotate;
     int number_rotate;
     std::vector <int> big_shape;
@@ -23,7 +22,7 @@ private:
 public:
     reverse_z();
     ~reverse_z();
-    reverse_z(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_,int nume_,int rotate_, int number_rotate_, std::vector<int> big_shape_);
+    reverse_z(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_,int rotate_, int number_rotate_, std::vector<int> big_shape_);
     reverse_z(const reverse_z& other);
     reverse_z& operator=(const reverse_z& other);
     static void set_reverse_z(std::shared_ptr<pieces> &r_zPtr);

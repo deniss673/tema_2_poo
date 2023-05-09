@@ -30,7 +30,7 @@ public:
     game_table();
     ~game_table();
     game_table(const game_table& other);
-    game_table(const std::array<int,200> m_, int scor_,int level_, int nr_lines_, std::vector<std::shared_ptr<pieces>> current_pieces_,std::vector<std::shared_ptr<pieces>> next_piece_);
+    game_table(const std::array<int,200> m_, int scor_,int level_, int nr_lines_, std::vector<std::shared_ptr<pieces>>& current_pieces_,std::vector<std::shared_ptr<pieces>>& next_piece_);
     game_table& operator=(const game_table& other);
 
     void set_next_piece();
@@ -41,7 +41,7 @@ public:
 
     void setcolor(sf::RectangleShape &cell,int number);
 
-    bool verrify_collision(int x,std::array <int,200> m);
+    bool verrify_collision(int x,const std::array <int,200> m);
 
     bool verrify_rotate(std::array <int,200> m);
 
@@ -61,9 +61,9 @@ public:
 
     void pieces_goto_end(std::array <int,200> &m,std::vector<std::shared_ptr<pieces>>& current_pieces);
 
-    bool verify_game(std::array<int,200> m);
+    bool verify_game(const std::array<int,200> m);
 
-    bool complete_line(std::array <int,200> m,int line);
+    bool complete_line(const std::array <int,200> m,int line);
 
     void set_line(std::array <int,200> &m, int number,int line);
 

@@ -13,8 +13,8 @@ game_table::game_table(const game_table &other): m{other.m}, scor{other.scor}, l
                                                  next_pieces(other.next_pieces) {}
 
 game_table::game_table(const std::array<int, 200> m_, int scor_, int level_, int nr_lines_,
-                       std::vector<std::shared_ptr<pieces>> current_pieces_,
-                       std::vector<std::shared_ptr<pieces>> next_piece_): m{m_},scor{scor_},level{level_},nr_lines{nr_lines_},current_pieces{current_pieces_},next_pieces{next_piece_} {}
+                       std::vector<std::shared_ptr<pieces>>& current_pieces_,
+                       std::vector<std::shared_ptr<pieces>>& next_piece_): m{m_},scor{scor_},level{level_},nr_lines{nr_lines_},current_pieces{current_pieces_},next_pieces{next_piece_} {}
 
 game_table &game_table::operator=(const game_table &other) {
     if (this != &other) {
@@ -144,7 +144,7 @@ void game_table::setcolor(sf::RectangleShape &cell, int number) {
     cell.setFillColor(color);
 }
 
-bool game_table::verrify_collision(int x, std::array<int, 200> m) {
+bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
     if(x==1){
         std::vector<int> shape=current_pieces[0]->get_shape();
         int poz=(current_pieces[0]->get_position().y+current_pieces[0]->Size_v())*10+current_pieces[0]->get_position().x;
@@ -239,10 +239,8 @@ bool game_table::verrify_collision(int x, std::array<int, 200> m) {
 }
 
 bool game_table::verrify_rotate(std::array<int, 200> m) {
-    std::vector<int> shape=current_pieces[0]->next_rotate(current_pieces[0]);
     int size_v=current_pieces[0]->Size_o();
     int size_o=current_pieces[0]->Size_v();
-    int c=0;
 
     sf::Vector2i position=current_pieces[0]->get_position();
     if(size_v<size_o && verrify_collision(2,m)==false){
@@ -259,8 +257,7 @@ bool game_table::verrify_rotate(std::array<int, 200> m) {
             j--;
         }
     }
-    std::vector<int> current_shape=current_pieces[0]->get_shape();
-    c=0;
+    return true;
 }
 
 void game_table::show_next_piece(sf::RenderWindow &window) {
@@ -323,42 +320,41 @@ void game_table::show_screen(sf::RenderWindow &window, std::array<int, 200> m) {
     window.display();
 }
 
-void game_table::pieces_move_down(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>> &current_pieces) {
+void game_table::pieces_move_down(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     piece.move_down();
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_move_right(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>> &current_pieces) {
+void game_table::pieces_move_right(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     piece.move_right();
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_move_left(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>> &current_pieces) {
+void game_table::pieces_move_left(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     piece.move_left();
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_rotate(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>> &current_pieces) {
+void game_table::pieces_rotate(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     current_pieces[0]->rotate_piece(current_pieces[0]);
-    std::vector <int> test=current_pieces[0]->get_shape();
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_goto_end(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>> &current_pieces) {
+void game_table::pieces_goto_end(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
     while(verrify_collision(1,m)){
         pieces_move_down(m,current_pieces);
     }
 }
 
-bool game_table::verify_game(std::array<int, 200> m) {
+bool game_table::verify_game(const std::array<int, 200> m) {
     bool test=true;
     for(int i=0;i<10;i++){
         if(m[i]!=0){
@@ -368,7 +364,7 @@ bool game_table::verify_game(std::array<int, 200> m) {
     return test;
 }
 
-bool game_table::complete_line(std::array<int, 200> m, int line) {
+bool game_table::complete_line(const std::array<int, 200> m, int line) {
     line = line * 10;
     for (int i = 0; i < 10; i++) {
         if (m[line + i] == 0) {
@@ -469,7 +465,6 @@ void game_table::play_game(sf::RenderWindow &window) {
             play=false;
             ver=false;
         }
-
         int frame_counter=0;
         while (ver) {
             show_screen(window, m);
@@ -514,7 +509,8 @@ void game_table::play_game(sf::RenderWindow &window) {
 
             }
         }
-        play= verify_game(m);
+        if(!verify_game(m))
+            play=false;
         if(counter==20)
             frame_counter=0;
     }
