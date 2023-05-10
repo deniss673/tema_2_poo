@@ -21,7 +21,7 @@ std::vector <int> big_shape;
 public:
 t_tetromino();
 ~t_tetromino();
-t_tetromino(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,const std::vector<int>& shape_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_);
+t_tetromino(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_, int size_o_,int size_v_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_);
 static void set_t_tetromino(std::shared_ptr<pieces> &tPtr);
 t_tetromino(const t_tetromino& other);
 t_tetromino& operator=(const t_tetromino& other);

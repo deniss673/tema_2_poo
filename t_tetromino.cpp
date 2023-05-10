@@ -7,8 +7,8 @@
 t_tetromino::t_tetromino()=default;
 t_tetromino::~t_tetromino(){}
 
-t_tetromino::t_tetromino(sf::Vector2i position_, sf::Color color_, int size_o_, int size_v_,const std::vector<int>& shape_, int rotate_, int number_rotate_,const std::vector<int>& big_shape_) :position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},rotate{rotate_},number_rotate{number_rotate_},big_shape{big_shape_}{}
-t_tetromino::t_tetromino(const t_tetromino &other): position{other.position},color{other.color},size_o{other.size_o},size_v{other.size_v},shape{other.shape},rotate{other.rotate},number_rotate{other.number_rotate} {}
+t_tetromino::t_tetromino(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_, int size_o_, int size_v_, int rotate_, int number_rotate_,const std::vector<int>& big_shape_) :position{position_},color{color_},shape{shape_},size_o{size_o_},size_v{size_v_},rotate{rotate_},number_rotate{number_rotate_},big_shape{big_shape_}{}
+t_tetromino::t_tetromino(const t_tetromino &other): position{other.position},color{other.color},shape{other.shape},size_o{other.size_o},size_v{other.size_v},rotate{other.rotate},number_rotate{other.number_rotate},big_shape{other.big_shape} {}
 
 t_tetromino &t_tetromino::operator=(const t_tetromino &other) {
     if (this != &other) {

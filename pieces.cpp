@@ -8,7 +8,7 @@ pieces::pieces(sf::Vector2i position_, sf::Color color_,const std::vector<int>& 
                                                                                                                                                                                  big_shape{big_shape_}{}
 pieces::pieces() {}
 
-pieces::pieces(const pieces &other): position{other.position},color{other.color},shape{other.shape},size_o{other.size_o},size_v{other.size_v},rotate{other.rotate},number_rotate{other.number_rotate} {}
+pieces::pieces(const pieces &other): position{other.position},color{other.color},shape{other.shape},size_o{other.size_o},size_v{other.size_v},rotate{other.rotate},number_rotate{other.number_rotate},big_shape{other.big_shape} {}
 
 pieces &pieces::operator=(const pieces &other) {
     if (this != &other) {
@@ -19,6 +19,7 @@ pieces &pieces::operator=(const pieces &other) {
         shape = other.shape;
         rotate = other.rotate;
         number_rotate = other.number_rotate;
+        big_shape=other.big_shape;
     }
     return *this;
 }
