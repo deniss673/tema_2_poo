@@ -14,7 +14,6 @@ private:
     std::string message;
 public:
     explicit Exception(const std::string& message_);
-    virtual const char* what() const noexcept override;
 
 };
 class FontNotFound : public Exception{

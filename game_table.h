@@ -59,7 +59,7 @@ public:
 
     void pieces_rotate(std::array<int, 200> &m,std::vector<std::shared_ptr<pieces>>& current_pieces);
 
-    void pieces_goto_end(std::array <int,200> &m,std::vector<std::shared_ptr<pieces>>& current_pieces);
+    void pieces_goto_end(std::array <int,200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces);
 
     bool verify_game(const std::array<int,200> m);
 

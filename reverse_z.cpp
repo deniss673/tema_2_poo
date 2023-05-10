@@ -6,7 +6,7 @@
 
 reverse_z::reverse_z()=default;
 reverse_z::~reverse_z(){}
-reverse_z::reverse_z(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,const std::vector<int> shape_,int rotate_, int number_rotate_,const std::vector<int> big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},rotate{rotate_},number_rotate{number_rotate_},
+reverse_z::reverse_z(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,const std::vector<int>& shape_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},rotate{rotate_},number_rotate{number_rotate_},
                                                                                                                                                                                        big_shape{big_shape_}{}
 reverse_z::reverse_z(const reverse_z &other): position{other.position},color{other.color},size_o{other.size_o},size_v{other.size_v},shape{other.shape},rotate{other.rotate},number_rotate{other.number_rotate} {}
 

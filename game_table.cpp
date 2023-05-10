@@ -348,7 +348,7 @@ void game_table::pieces_rotate(std::array<int, 200> &m, std::vector<std::shared_
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_goto_end(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
+void game_table::pieces_goto_end(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
     while(verrify_collision(1,m)){
         pieces_move_down(m,current_pieces);
     }
