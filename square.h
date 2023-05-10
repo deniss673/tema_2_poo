@@ -13,14 +13,14 @@ private:
     sf::Vector2i position;
     sf::Color color;
     std::vector<int> shape;
-    int size_v;
     int size_o;
+    int size_v;
     std::vector <int> big_shape;
 
 public:
     square();
     ~square();
-    square(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_,int size_v_,int size_o_,const std::vector<int>& big_shape_);
+    square(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_,int size_o_,int size_v_,const std::vector<int>& big_shape_);
     square(const square& other);
     square& operator=(const square& other);
     static void setsquare(std::shared_ptr<pieces> &squarePtr);
