@@ -4,7 +4,7 @@
 
 #include "pieces.h"
 
-pieces::pieces(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_,int rotate_, int number_rotate_, std::vector<int> big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},rotate{rotate_},number_rotate{number_rotate_},
+pieces::pieces(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,const std::vector<int> shape_,int rotate_, int number_rotate_,const std::vector<int> big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},rotate{rotate_},number_rotate{number_rotate_},
                                                                                                                                                                                  big_shape{big_shape_}{}
 pieces::pieces() {}
 

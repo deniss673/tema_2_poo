@@ -6,8 +6,8 @@
 
 square::square()=default;
 square::~square(){}
-square::square(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_, std::vector<int> big_shape_):position{position_},color{color_},size_o{size_o_},size_v{size_v_},shape{shape_},big_shape{big_shape_} {}
-square::square(const square &other): position{other.position},color{other.color},size_o{other.size_o},size_v{other.size_v},shape{other.shape}{}
+square::square(sf::Vector2i position_, sf::Color color_,const std::vector<int> shape_, int size_o_,int size_v_,const std::vector<int> big_shape_):position{position_},color{color_},shape{shape_},size_o{size_o_},size_v{size_v_},big_shape{big_shape_} {}
+square::square(const square &other): position{other.position},color{other.color},shape{other.shape},size_o{other.size_o},size_v{other.size_v},big_shape{other.big_shape}{}
 
 square &square::operator=(const square &other) {
     if (this != &other) {
@@ -29,5 +29,5 @@ void square::setsquare(std::shared_ptr<pieces> &squarePtr) {
 }
 
 std::vector<int> square::next_rotate(std::shared_ptr<pieces>& squarePtr) {
-    return {1,1,1,1};
+    return squarePtr->get_shape();
 }

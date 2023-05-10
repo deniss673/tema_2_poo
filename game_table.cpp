@@ -176,7 +176,7 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
     else if(x==2){
         std::vector<int> shape=current_pieces[0]->get_shape();
         int poz=(current_pieces[0]->get_position().y)*10+current_pieces[0]->get_position().x+current_pieces[0]->Size_o();
-        for(int i=current_pieces[0]->Size_o()-1;i<shape.size();i=i+current_pieces[0]->Size_o()){
+        for(auto i=current_pieces[0]->Size_o()-1;i<shape.size();i=i+current_pieces[0]->Size_o()){
             /*if(shape[i]==1 && m[poz]>0 || poz%10==0){
                 return false;
             }
@@ -210,7 +210,7 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
     else if(x==3){
         std::vector<int> shape=current_pieces[0]->get_shape();
         int poz=(current_pieces[0]->get_position().y)*10+current_pieces[0]->get_position().x-1;
-        for(int i=0;i<shape.size();i=i+current_pieces[0]->Size_o()){
+        for(auto i=0ull;i<shape.size();i=i+current_pieces[0]->Size_o()){
             int aux=poz;
             if(poz%10==9){
                 return false;
@@ -320,7 +320,7 @@ void game_table::show_screen(sf::RenderWindow &window, std::array<int, 200> m) {
     window.display();
 }
 
-void game_table::pieces_move_down(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
+void game_table::pieces_move_down(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     piece.move_down();
@@ -334,7 +334,7 @@ void game_table::pieces_move_right(std::array<int, 200> &m,const std::vector<std
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_move_left(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
+void game_table::pieces_move_left(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     piece.move_left();

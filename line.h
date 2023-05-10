@@ -22,7 +22,7 @@ private:
 public:
     line();
     ~line();
-    line(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,std::vector<int> shape_,int rotate_, int number_rotate_, std::vector<int> big_shape_);
+    line(sf::Vector2i position_, sf::Color color_, int size_o_,int size_v_,const std::vector<int> shape_,int rotate_, int number_rotate_,const std::vector<int> big_shape_);
     line(const line& other);
     line& operator=(const line& other);
     static void setline(std::shared_ptr<pieces> &linePtr);
