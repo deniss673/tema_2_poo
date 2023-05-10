@@ -34,8 +34,8 @@ void t_tetromino::set_t_tetromino(std::shared_ptr<pieces> &tPtr) {
 }
 
 void t_tetromino::rotate_piece(std::shared_ptr<pieces> &tPtr) {
-    size_v=tPtr->Size_o();
-    size_o=tPtr->Size_v();
+    int size_v_=tPtr->Size_o();
+    int size_o_=tPtr->Size_v();
     int x=tPtr->get_rotate();
     if(x==0){
         tPtr->set_shape({1,0,1,1,1,0});
@@ -51,8 +51,8 @@ void t_tetromino::rotate_piece(std::shared_ptr<pieces> &tPtr) {
     }
     x=x+1;
     x=x%tPtr->get_number_rotate();
-    tPtr->set_size_o(size_o);
-    tPtr->set_size_v(size_v);
+    tPtr->set_size_o(size_o_);
+    tPtr->set_size_v(size_v_);
     tPtr->set_rotate(x);
 }
 

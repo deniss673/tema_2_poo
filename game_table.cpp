@@ -176,7 +176,8 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
     else if(x==2){
         std::vector<int> shape=current_pieces[0]->get_shape();
         int poz=(current_pieces[0]->get_position().y)*10+current_pieces[0]->get_position().x+current_pieces[0]->Size_o();
-        for(auto i=current_pieces[0]->Size_o()-1;i<shape.size();i=i+current_pieces[0]->Size_o()){
+        int shape_size=shape.size();
+        for(auto i=current_pieces[0]->Size_o()-1;i<shape_size;i=i+current_pieces[0]->Size_o()){
             /*if(shape[i]==1 && m[poz]>0 || poz%10==0){
                 return false;
             }

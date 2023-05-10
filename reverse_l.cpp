@@ -36,8 +36,8 @@ void reverse_l::set_reverse_l(std::shared_ptr<pieces> &rlPtr) {
 }
 
 void reverse_l::rotate_piece(std::shared_ptr<pieces> &rlPtr) {
-    int size_v=rlPtr->Size_o();
-    int size_o=rlPtr->Size_v();
+    int size_v_=rlPtr->Size_o();
+    int size_o_=rlPtr->Size_v();
     int x=rlPtr->get_rotate();
     if(x==0){
         rlPtr->set_shape({1,1,1,0,1,0});
@@ -53,8 +53,8 @@ void reverse_l::rotate_piece(std::shared_ptr<pieces> &rlPtr) {
     }
     x=x+1;
     x=x%rlPtr->get_number_rotate();
-    rlPtr->set_size_o(size_o);
-    rlPtr->set_size_v(size_v);
+    rlPtr->set_size_o(size_o_);
+    rlPtr->set_size_v(size_v_);
     rlPtr->set_rotate(x);
 }
 

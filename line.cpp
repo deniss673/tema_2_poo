@@ -37,10 +37,10 @@ void line::setline(std::shared_ptr<pieces> &linePtr) {
 }
 
 void line::rotate_piece(std::shared_ptr<pieces> &linePtr) {
-    size_v=linePtr->Size_o();
-    size_o=linePtr->Size_v();
-    linePtr->set_size_v(size_v);
-    linePtr->set_size_o(size_o);
+    int size_v_=linePtr->Size_o();
+    int size_o_=linePtr->Size_v();
+    linePtr->set_size_v(size_v_);
+    linePtr->set_size_o(size_o_);
 }
 
 std::vector<int> line::next_rotate(std::shared_ptr<pieces> &linePtr) {
