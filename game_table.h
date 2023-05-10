@@ -24,8 +24,8 @@ private:
     int scor;
     int level;
     int nr_lines;
-    std::vector<std::shared_ptr<pieces>> current_pieces;
-    std::vector<std::shared_ptr<pieces>> next_pieces;
+    std::vector<std::shared_ptr<pieces>> current_piece;
+    std::vector<std::shared_ptr<pieces>> next_piece;
 public:
     game_table();
     ~game_table();

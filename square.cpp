@@ -9,7 +9,7 @@ square::square() = default;
 square::~square() {}
 
 square::square(sf::Vector2i position_, sf::Color color_, const std::vector<int> &shape_,  int size_v_,int size_o_,
-               const std::vector<int> &big_shape_) : position{position_}, color{color_}, shape{shape_},size_o{size_o_},size_v{size_v_},
+               const std::vector<int> &big_shape_) : position{position_}, color{color_}, shape{shape_},size_v{size_v_},size_o{size_o_},
                                                       big_shape{big_shape_} {}
 
 square::square(const square &other) : position{other.position}, color{other.color}, shape{other.shape},

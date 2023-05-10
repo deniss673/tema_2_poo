@@ -44,6 +44,5 @@ void line::rotate_piece(std::shared_ptr<pieces> &linePtr) {
 }
 
 std::vector<int> line::next_rotate(std::shared_ptr<pieces> &linePtr) {
-    std::vector <int> x={1,1,1,1};
-    return x;
+    return linePtr->get_shape();
 }
