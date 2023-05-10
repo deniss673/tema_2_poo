@@ -327,7 +327,7 @@ void game_table::pieces_move_down(std::array<int, 200> &m, std::vector<std::shar
     piece_set_matrix(m,piece.get_position(),current_pieces,true);
 }
 
-void game_table::pieces_move_right(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
+void game_table::pieces_move_right(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
     auto& piece=*current_pieces[0];
     piece_set_matrix(m,piece.get_position(),current_pieces,false);
     piece.move_right();

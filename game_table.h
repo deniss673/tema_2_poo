@@ -53,7 +53,7 @@ public:
 
     void pieces_move_down(std::array<int, 200> &m,std::vector<std::shared_ptr<pieces>>& current_pieces);
 
-    void pieces_move_right(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces);
+    void pieces_move_right(std::array<int, 200> &m, const std::vector<std::shared_ptr<pieces>>& current_pieces);
 
     void pieces_move_left(std::array<int, 200> &m,std::vector<std::shared_ptr<pieces>>& current_pieces);
 
