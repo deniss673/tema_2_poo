@@ -12,9 +12,9 @@ class line: public pieces{
 private:
     sf::Vector2i position;
     sf::Color color;
-    std::vector<int> shape;
-    int size_v;
     int size_o;
+    int size_v;
+    std::vector<int> shape;
     int rotate;
     int number_rotate;
     std::vector <int> big_shape;

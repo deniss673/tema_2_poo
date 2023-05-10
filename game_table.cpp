@@ -5,20 +5,20 @@
 #include "game_table.h"
 
 
-game_table::game_table():m({0}), scor(0), level(1), nr_lines(0), current_pieces({}), next_pieces({}){}
+game_table::game_table():table({0}), scor(0), level(1), nr_lines(0), current_pieces({}), next_pieces({}){}
 
 game_table::~game_table() {}
 
-game_table::game_table(const game_table &other): m{other.m}, scor{other.scor}, level{other.level},nr_lines{other.nr_lines},current_pieces{other.current_pieces},
+game_table::game_table(const game_table &other): table{other.table}, scor{other.scor}, level{other.level},nr_lines{other.nr_lines},current_pieces{other.current_pieces},
                                                  next_pieces(other.next_pieces) {}
 
-game_table::game_table(const std::array<int, 200> m_, int scor_, int level_, int nr_lines_,
+game_table::game_table(const std::array<int, 200> table_, int scor_, int level_, int nr_lines_,
                        std::vector<std::shared_ptr<pieces>>& current_pieces_,
-                       std::vector<std::shared_ptr<pieces>>& next_piece_): m{m_},scor{scor_},level{level_},nr_lines{nr_lines_},current_pieces{current_pieces_},next_pieces{next_piece_} {}
+                       std::vector<std::shared_ptr<pieces>>& next_piece_): table{table_},scor{scor_},level{level_},nr_lines{nr_lines_},current_pieces{current_pieces_},next_pieces{next_piece_} {}
 
 game_table &game_table::operator=(const game_table &other) {
     if (this != &other) {
-        m = other.m;
+        table = other.table;
         scor = other.scor;
         level=other.level;
         nr_lines=other.level;
@@ -447,17 +447,19 @@ void game_table::scoring(int lines) {
     }
 }
 
+
 void game_table::play_game(sf::RenderWindow &window) {
     int cell_size=40;
     window.setFramerateLimit(60);
     set_next_piece();
     sf::RectangleShape cell(sf::Vector2f(cell_size-1,cell_size-1));
-    show_screen(window,m);
+    set_table();
+    show_screen(window,table);
     bool play=true;
     int counter=0;
     while(play) {
         bool ver=true;
-        if(m[14]==0 && m[15]==0) {
+        if(table[14]==0 && table[15]==0) {
             current_pieces.emplace_back(next_pieces[0]);
             next_pieces.pop_back();
             set_next_piece();
@@ -468,37 +470,37 @@ void game_table::play_game(sf::RenderWindow &window) {
         }
         int frame_counter=0;
         while (ver) {
-            show_screen(window, m);
+            show_screen(window, table);
             frame_counter++;
             if(frame_counter%20==0){
-                if(verrify_collision(1,m)==true)
-                    pieces_move_down(m, current_pieces);
-                show_screen(window, m);
+                if(verrify_collision(1,table)==true)
+                    pieces_move_down(table, current_pieces);
+                show_screen(window, table);
                 counter++;
                 frame_counter=0;
             }
             if(frame_counter%5==0){
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))  {
-                    if(verrify_collision(2,m))
-                        pieces_move_right(m,current_pieces);
+                    if(verrify_collision(2,table))
+                        pieces_move_right(table,current_pieces);
 
                 }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && verrify_collision(3,m))
-                    pieces_move_left(m,current_pieces);
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)&& verrify_collision(1,m))
-                    pieces_move_down(m,current_pieces);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && verrify_collision(3,table))
+                    pieces_move_left(table,current_pieces);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)&& verrify_collision(1,table))
+                    pieces_move_down(table,current_pieces);
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-                    pieces_goto_end(m,current_pieces);
+                    pieces_goto_end(table,current_pieces);
                 }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && verrify_rotate(m)){
-                    pieces_rotate(m,current_pieces);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && verrify_rotate(table)){
+                    pieces_rotate(table,current_pieces);
                 }
 
             }
-            if (verrify_collision(1,m)==false) {
+            if (verrify_collision(1,table)==false) {
                 ver = false;
                 current_pieces.pop_back();
-                int lines= delete_lines(m);
+                int lines= delete_lines(table);
                 if(lines>0){
                     scoring(lines);
 
@@ -510,7 +512,7 @@ void game_table::play_game(sf::RenderWindow &window) {
 
             }
         }
-        if(!verify_game(m))
+        if(!verify_game(table))
             play=false;
         if(counter==20)
             frame_counter=0;

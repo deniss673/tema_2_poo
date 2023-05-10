@@ -20,7 +20,7 @@
 
 class game_table {
 private:
-    std::array <int,200> m;
+    std::array <int,200> table;
     int scor;
     int level;
     int nr_lines;
@@ -77,6 +77,10 @@ public:
 
     void start_game(sf::RenderWindow& window);
 
+    void set_table(){
+        std::array<int,200> matrix{0};
+        table=matrix;
+    }
 };
 
 
