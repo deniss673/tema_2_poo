@@ -58,7 +58,6 @@ void l_tetromino::rotate_piece(std::shared_ptr<pieces> &lPtr) {
     lPtr->set_size_v(size_v_);
     lPtr->set_rotate(x);
 }
-
 std::shared_ptr<pieces> l_tetromino::clone() const {
     std::shared_ptr<pieces> cloned = std::make_shared<l_tetromino>(*this);
     set_l_tetromino(cloned);

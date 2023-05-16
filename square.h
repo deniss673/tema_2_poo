@@ -29,5 +29,4 @@ public:
     std::shared_ptr<pieces> clone() const;
 };
 
-
 #endif //OOP_SQUARE_H

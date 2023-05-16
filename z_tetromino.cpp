@@ -49,7 +49,6 @@ void z_tetromino::rotate_piece(std::shared_ptr<pieces> &zPtr) {
     test=test%zPtr->get_number_rotate();
     zPtr->set_rotate(test);
 }
-
 std::shared_ptr<pieces> z_tetromino::clone() const {
     std::shared_ptr<pieces> cloned = std::make_shared<z_tetromino>(*this);
     set_z_tetromino(cloned);

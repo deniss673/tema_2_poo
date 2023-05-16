@@ -31,7 +31,6 @@ void square::setsquare(std::shared_ptr<pieces> &squarePtr) {
     squarePtr->set_size_v(2);
     squarePtr->set_big_shape({0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0});
 }
-
 std::shared_ptr<pieces> square::clone() const {
     std::shared_ptr<pieces> cloned = std::make_shared<square>(*this);
     setsquare(cloned);

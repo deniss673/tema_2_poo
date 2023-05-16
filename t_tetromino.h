@@ -27,7 +27,6 @@ t_tetromino(const t_tetromino& other);
 t_tetromino& operator=(const t_tetromino& other);
 void rotate_piece(std::shared_ptr<pieces>& tPtr) override;
 std::shared_ptr<pieces> clone() const;
-
 };
 
 

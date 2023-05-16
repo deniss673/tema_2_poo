@@ -28,8 +28,6 @@ public:
     void rotate_piece(std::shared_ptr<pieces>& r_zPtr) override;
     std::shared_ptr<pieces> clone() const;
 
-
-
 };
 
 

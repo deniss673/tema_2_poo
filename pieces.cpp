@@ -27,7 +27,6 @@ pieces &pieces::operator=(const pieces &other) {
 void pieces::move_down() {
     position.y=position.y+1;
 }
-
 std::vector<int> pieces::get_big_shape() {
     return big_shape;
 }

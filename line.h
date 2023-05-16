@@ -19,7 +19,6 @@ private:
     int number_rotate;
     std::vector <int> big_shape;
     static void setline(std::shared_ptr<pieces> &linePtr);
-
 public:
     line();
     ~line();

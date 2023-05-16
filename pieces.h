@@ -36,7 +36,6 @@ public:
     int Size_o();
     sf::Color get_color();
     sf::Vector2i get_position();
-
     int get_number_rotate();
     void set_position(const sf::Vector2i& pos);
     int get_rotate();

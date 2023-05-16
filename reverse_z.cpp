@@ -50,7 +50,6 @@ void reverse_z::rotate_piece(std::shared_ptr<pieces> &r_zPtr) {
     x=x%r_zPtr->get_number_rotate();
     r_zPtr->set_rotate(x);
 }
-
 std::shared_ptr<pieces> reverse_z::clone() const {
     std::shared_ptr<pieces> cloned = std::make_shared<reverse_z>(*this);
     set_reverse_z(cloned);

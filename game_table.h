@@ -36,7 +36,6 @@ private:
         gsquare
     };
     void set_next_piece();
-
     int return_number(sf::Color color);
 
     void piece_set_matrix(sf::Vector2i position,bool set);

@@ -27,7 +27,6 @@ public:
     reverse_l& operator=(const reverse_l& other);
     void rotate_piece(std::shared_ptr<pieces>& rlPtr) override;
     std::shared_ptr<pieces> clone() const;
-
 };
 
 

@@ -28,5 +28,4 @@ public:
 
 };
 
-
 #endif //OOP_Z_TETROMINO_H

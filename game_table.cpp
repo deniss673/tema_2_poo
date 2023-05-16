@@ -32,10 +32,8 @@ void game_table::set_next_piece() {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 6 );
-
     int randomIndex=dis(gen);
     game_pieces g_piece= static_cast<game_pieces>(randomIndex);
-
     if(g_piece==gl_tetromino){
         this->next_piece.push_back(l_tetromino().clone());
     }

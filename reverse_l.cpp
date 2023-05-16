@@ -57,7 +57,6 @@ void reverse_l::rotate_piece(std::shared_ptr<pieces> &rlPtr) {
     rlPtr->set_size_v(size_v_);
     rlPtr->set_rotate(x);
 }
-
 std::shared_ptr<pieces> reverse_l::clone() const {
     std::shared_ptr<pieces> cloned = std::make_shared<reverse_l>(*this);
     set_reverse_l(cloned);
