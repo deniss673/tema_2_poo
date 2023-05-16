@@ -43,6 +43,10 @@ void line::rotate_piece(std::shared_ptr<pieces> &linePtr) {
     linePtr->set_size_o(size_o_);
 }
 
-std::vector<int> line::next_rotate(std::shared_ptr<pieces> &linePtr) {
-    return linePtr->get_shape();
+std::shared_ptr<pieces> line::clone() const {
+    std::shared_ptr<pieces> cloned = std::make_shared<line>(*this);
+    setline(cloned);
+    return cloned;
 }
+
+

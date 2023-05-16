@@ -50,13 +50,10 @@ void z_tetromino::rotate_piece(std::shared_ptr<pieces> &zPtr) {
     zPtr->set_rotate(test);
 }
 
-std::vector<int> z_tetromino::next_rotate(std::shared_ptr<pieces> &zPtr) {
-    int x=zPtr->get_rotate()+1;
-    x=x%zPtr->get_number_rotate();
-    if(x==0){
-        return {0,1,1,1,1,0};
-    }
-    else{
-        return {1,1,0,0,1,1};
-    }
+std::shared_ptr<pieces> z_tetromino::clone() const {
+    std::shared_ptr<pieces> cloned = std::make_shared<z_tetromino>(*this);
+    set_z_tetromino(cloned);
+    return cloned;
 }
+
+

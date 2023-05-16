@@ -58,20 +58,10 @@ void reverse_l::rotate_piece(std::shared_ptr<pieces> &rlPtr) {
     rlPtr->set_rotate(x);
 }
 
-std::vector<int> reverse_l::next_rotate(std::shared_ptr<pieces>& rlPtr) {
-    int x=rlPtr->get_rotate()+1;
-    x=x%rlPtr->get_number_rotate();
-
-    if(x==0){
-        return {1,1,1,0,1,0};
-    }
-    else if(x==1){
-        return {1,1,1,0,0,1};
-    }
-    else if(x==2){
-        return {0,1,0,1,1,1};
-    }
-    else{
-        return {1,0,0,1,1,1};
-    }
+std::shared_ptr<pieces> reverse_l::clone() const {
+    std::shared_ptr<pieces> cloned = std::make_shared<reverse_l>(*this);
+    set_reverse_l(cloned);
+    return cloned;
 }
+
+

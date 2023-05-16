@@ -18,15 +18,15 @@ private:
     int rotate;
     int number_rotate;
     std::vector<int> big_shape;
+    static void set_reverse_l(std::shared_ptr<pieces> &rlPtr);
 public:
     reverse_l();
     ~reverse_l();
     reverse_l(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_, int size_o_,int size_v_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_);
     reverse_l(const reverse_l& other);
     reverse_l& operator=(const reverse_l& other);
-    static void set_reverse_l(std::shared_ptr<pieces> &rlPtr);
     void rotate_piece(std::shared_ptr<pieces>& rlPtr) override;
-    std::vector<int> next_rotate(std::shared_ptr<pieces>& rlPtr) override;
+    std::shared_ptr<pieces> clone() const;
 
 };
 

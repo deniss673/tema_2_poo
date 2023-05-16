@@ -9,7 +9,9 @@ l_tetromino::~l_tetromino(){}
 
 l_tetromino::l_tetromino(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_, int size_o_,int size_v_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_):position{position_},color{color_},shape{shape_},size_o{size_o_},size_v{size_v_},rotate{rotate_},number_rotate{number_rotate_},
                                                                                                                                                                                            big_shape{big_shape_}{}
-l_tetromino::l_tetromino(const l_tetromino &other):pieces(other), position{other.position},color{other.color},shape{other.shape},size_o{other.size_o},size_v{other.size_v},rotate{other.rotate},number_rotate{other.number_rotate},big_shape{other.big_shape} {}
+l_tetromino::l_tetromino(const l_tetromino &other):pieces(other), position{other.position},color{other.color},shape{other.shape},size_o{other.size_o},size_v{other.size_v},rotate{other.rotate},number_rotate{other.number_rotate},big_shape{other.big_shape} {
+
+}
 
 l_tetromino &l_tetromino::operator=(const l_tetromino &other) {
     if (this != &other) {
@@ -57,23 +59,13 @@ void l_tetromino::rotate_piece(std::shared_ptr<pieces> &lPtr) {
     lPtr->set_rotate(x);
 }
 
-std::vector<int> l_tetromino::next_rotate(std::shared_ptr<pieces>& lPtr) {
-    int x=lPtr->get_rotate();
-    x=x+1;
-    x=x%lPtr->get_number_rotate();
-    if(x==0){
-        return {1,0,1,0,1,1};
-    }
-    else if(x==1){
-        return {1,1,1,1,0,0};
-    }
-    else if(x==2){
-        return {1,1,0,1,0,1};
-    }
-    else{
-        return {0,0,1,1,1,1};
-    }
+std::shared_ptr<pieces> l_tetromino::clone() const {
+    std::shared_ptr<pieces> cloned = std::make_shared<l_tetromino>(*this);
+    set_l_tetromino(cloned);
+    return cloned;
 }
+
+
 
 
 

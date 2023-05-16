@@ -17,16 +17,16 @@ int size_v;
 int rotate;
 int number_rotate;
 std::vector <int> big_shape;
+static void set_t_tetromino(std::shared_ptr<pieces> &tPtr);
 
 public:
 t_tetromino();
 ~t_tetromino();
 t_tetromino(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_, int size_o_,int size_v_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_);
-static void set_t_tetromino(std::shared_ptr<pieces> &tPtr);
 t_tetromino(const t_tetromino& other);
 t_tetromino& operator=(const t_tetromino& other);
 void rotate_piece(std::shared_ptr<pieces>& tPtr) override;
-std::vector<int> next_rotate(std::shared_ptr<pieces>& tPtr) override;
+std::shared_ptr<pieces> clone() const;
 
 };
 

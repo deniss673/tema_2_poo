@@ -29,9 +29,36 @@ game_table &game_table::operator=(const game_table &other) {
 }
 
 void game_table::set_next_piece() {
-    int random;
-    random=rand()%7+1;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(0, 6 );
 
+    int randomIndex=dis(gen);
+    game_pieces g_piece= static_cast<game_pieces>(randomIndex);
+
+    if(g_piece==gl_tetromino){
+        this->next_piece.push_back(l_tetromino().clone());
+    }
+    else if(g_piece==gline){
+        this->next_piece.push_back(line().clone());
+    }
+    else if(g_piece==greverse_l){
+        this->next_piece.push_back(reverse_l().clone());
+    }
+    else if(g_piece==greverse_z){
+        this->next_piece.push_back(reverse_z().clone());
+    }
+    else if(g_piece==gsquare){
+        this->next_piece.push_back(square().clone());
+    }
+    else if(g_piece==gz_tetromino){
+        this->next_piece.push_back(z_tetromino().clone());
+    }
+    else if(g_piece==gt_tetromino){
+        this->next_piece.push_back(t_tetromino().clone());
+    }
+
+    /*
     if(random==1) {
         pieces* ptrPieces= new square();
         square* ptrSquare=dynamic_cast<square*>(ptrPieces);
@@ -74,6 +101,7 @@ void game_table::set_next_piece() {
         next_piece.emplace_back(rzPtr);
         reverse_z::set_reverse_z(next_piece[0]);
     }
+     */
 }
 
 int game_table::return_number(sf::Color color) {
@@ -95,23 +123,23 @@ int game_table::return_number(sf::Color color) {
     return final_color;
 }
 
-void game_table::piece_set_matrix(std::array<int, 200> &m, sf::Vector2i position,
-                                  std::vector<std::shared_ptr<pieces>> current_pieces, bool set) {
-    auto& piece=*current_pieces[0];
+void game_table::piece_set_matrix( sf::Vector2i position,
+                                   bool set) {
+    auto& piece=*this->current_piece[0];
     int size_v=piece.Size_v();
     int size_o=piece.Size_o();
-    std::vector shape=current_pieces[0]->get_shape();
+    std::vector shape=this->current_piece[0]->get_shape();
     int c=0;
     for(int i=position.y;i<position.y+size_v;i++){
         for(int j=position.x;j<position.x+size_o;j++){
             if(set==true){
-                if(m[i*10+j]==0)
-                    m[i*10+j]=return_number(piece.get_color())*shape[c];
+                if(this->table[i*10+j]==0)
+                    this->table[i*10+j]=return_number(piece.get_color())*shape[c];
                 c++;
             }
             else{
                 if(shape[c]==1)
-                    m[i*10+j]=0;
+                    this->table[i*10+j]=0;
                 c++;
             }
         }
@@ -144,7 +172,7 @@ void game_table::setcolor(sf::RectangleShape &cell, int number) {
     cell.setFillColor(color);
 }
 
-bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
+bool game_table::verrify_collision(int x) {
     if(x==1){
         std::vector<int> shape=current_piece[0]->get_shape();
         int poz=(current_piece[0]->get_position().y+current_piece[0]->Size_v())*10+current_piece[0]->get_position().x;
@@ -156,7 +184,7 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
             int lp=0;
             while(j>=0) {
                 if(shape[i+j*current_piece[0]->Size_o()]==1){
-                    if(lp==0 && m[poz]>0){
+                    if(lp==0 && this->table[poz]>0){
                         return false;
                     }
                     lp=1;
@@ -193,7 +221,7 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
             while(j<current_piece[0]->Size_v()) {
 
                 if (shape[i - j] == 1) {
-                    if (lp == 0 && m[poz] > 0) {
+                    if (lp == 0 && this->table[poz] > 0) {
                         return false;
                     }
                     lp = 1;
@@ -221,7 +249,7 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
             while(j<current_piece[0]->Size_v()) {
 
                 if (shape[i + j] == 1) {
-                    if (lp == 0 && m[poz] > 0) {
+                    if (lp == 0 && this->table[poz] > 0) {
                         return false;
                     }
                     lp = 1;
@@ -239,12 +267,12 @@ bool game_table::verrify_collision(int x,const std::array<int, 200> m) {
     return true;
 }
 
-bool game_table::verrify_rotate(std::array<int, 200> m) {
+bool game_table::verrify_rotate() {
     int size_v=current_piece[0]->Size_o();
     int size_o=current_piece[0]->Size_v();
 
     sf::Vector2i position=current_piece[0]->get_position();
-    if(size_v<size_o && verrify_collision(2,m)==false){
+    if(size_v<size_o && verrify_collision(2)==false){
         return false;
     }
     if(size_v==1){
@@ -252,7 +280,7 @@ bool game_table::verrify_rotate(std::array<int, 200> m) {
             return false;}
         int j=size_o-1;
         while(j>0){
-            if(m[position.y*10+position.x+j]>0) {
+            if(this->table[position.y*10+position.x+j]>0) {
                 return false;
             }
             j--;
@@ -305,13 +333,13 @@ void game_table::show_score_and_level(sf::RenderWindow &window) {
     window.draw(Level);
 }
 
-void game_table::show_screen(sf::RenderWindow &window, std::array<int, 200> m) {
+void game_table::show_screen(sf::RenderWindow &window) {
     int cell_size=40;
     sf::RectangleShape cell(sf::Vector2f(cell_size-1,cell_size-1));
     window.clear();
     for(int i=0;i<10;i++){
         for(int j=0;j<20;j++){
-            setcolor(cell,m[j*10+i]);
+            setcolor(cell,this->table[j*10+i]);
             cell.setPosition(cell_size*i,cell_size*j);
             window.draw(cell);
         }
@@ -321,94 +349,94 @@ void game_table::show_screen(sf::RenderWindow &window, std::array<int, 200> m) {
     window.display();
 }
 
-void game_table::pieces_move_down(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
-    auto& piece=*current_pieces[0];
-    piece_set_matrix(m,piece.get_position(),current_pieces,false);
+void game_table::pieces_move_down() {
+    auto& piece=*this->current_piece[0];
+    piece_set_matrix(piece.get_position(),false);
     piece.move_down();
-    piece_set_matrix(m,piece.get_position(),current_pieces,true);
+    piece_set_matrix(piece.get_position(),true);
 }
 
-void game_table::pieces_move_right(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
-    auto& piece=*current_pieces[0];
-    piece_set_matrix(m,piece.get_position(),current_pieces,false);
+void game_table::pieces_move_right() {
+    auto& piece=*this->current_piece[0];
+    piece_set_matrix(piece.get_position(),false);
     piece.move_right();
-    piece_set_matrix(m,piece.get_position(),current_pieces,true);
+    piece_set_matrix(piece.get_position(),true);
 }
 
-void game_table::pieces_move_left(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
-    auto& piece=*current_pieces[0];
-    piece_set_matrix(m,piece.get_position(),current_pieces,false);
+void game_table::pieces_move_left() {
+    auto& piece=*this->current_piece[0];
+    piece_set_matrix(piece.get_position(),false);
     piece.move_left();
-    piece_set_matrix(m,piece.get_position(),current_pieces,true);
+    piece_set_matrix(piece.get_position(),true);
 }
 
-void game_table::pieces_rotate(std::array<int, 200> &m, std::vector<std::shared_ptr<pieces>>& current_pieces) {
-    auto& piece=*current_pieces[0];
-    piece_set_matrix(m,piece.get_position(),current_pieces,false);
-    current_pieces[0]->rotate_piece(current_pieces[0]);
-    piece_set_matrix(m,piece.get_position(),current_pieces,true);
+void game_table::pieces_rotate() {
+    auto& piece=*this->current_piece[0];
+    piece_set_matrix(piece.get_position(),false);
+    this->current_piece[0]->rotate_piece(this->current_piece[0]);
+    piece_set_matrix(piece.get_position(),true);
 }
 
-void game_table::pieces_goto_end(std::array<int, 200> &m,const std::vector<std::shared_ptr<pieces>>& current_pieces) {
-    while(verrify_collision(1,m)){
-        pieces_move_down(m,current_pieces);
+void game_table::pieces_goto_end() {
+    while(verrify_collision(1)){
+        pieces_move_down();
     }
 }
 
-bool game_table::verify_game(const std::array<int, 200> m) {
+bool game_table::verify_game() {
     bool test=true;
     for(int i=0;i<10;i++){
-        if(m[i]!=0){
+        if(this->table[i]!=0){
             test=false;
         }
     }
     return test;
 }
 
-bool game_table::complete_line(const std::array<int, 200> m, int line) {
+bool game_table::complete_line( int line) {
     line = line * 10;
     for (int i = 0; i < 10; i++) {
-        if (m[line + i] == 0) {
+        if (this->table[line + i] == 0) {
             return false;
         }
     }
     return true;
 }
 
-void game_table::set_line(std::array<int, 200> &m, int number, int line) {
+void game_table::set_line( int number, int line) {
     line=line*10;
 
     for(int i=0;i<10;i++){
-        m[line+i]=number;
+        this->table[line+i]=number;
     }
 }
 
-void game_table::swap_lines(std::array<int, 200> &m, int line) {
+void game_table::swap_lines( int line) {
     line=line*10;
     std::array <int,10> temp;
     if(line>0) {
         for (int i = 0; i < 10; i++) {
-            temp[i] = m[line + i];
+            temp[i] = this->table[line + i];
         }
         for (int i = line; i < line + 10; i++) {
-            m[i] = m[i - 10];
+            this->table[i] = this->table[i - 10];
         }
         for (int i = 0; i < 10; i++) {
-            m[line + i - 10] = temp[i];
+            this->table[line + i - 10] = temp[i];
         }
     }
     else{
         for (int i = 0; i < 10; i++) {
-            m[line+i] = 0;
+            this->table[line+i] = 0;
         }
     }
 }
 
-int game_table::delete_lines(std::array<int, 200> &m) {
+int game_table::delete_lines() {
     int completed_lines=0;
     for(int i=0;i<20;i++) {
-        if (complete_line(m, i)) {
-            set_line(m, -1, i);
+        if (complete_line(i)) {
+            set_line( -1, i);
             nr_lines=nr_lines+1;
             completed_lines=completed_lines+1;
         }
@@ -417,12 +445,12 @@ int game_table::delete_lines(std::array<int, 200> &m) {
     while(verify) {
         int c=0;
         for (int i = 0; i < 20; i++) {
-            if (m[i * 10] == -1) {
-                swap_lines(m, i);
+            if (this->table[i * 10] == -1) {
+                swap_lines( i);
                 c++;
             }
             if(c>0){
-                set_line(m,0,0);
+                set_line(0,0);
             }
         }
         if(c==0){
@@ -454,7 +482,7 @@ void game_table::play_game(sf::RenderWindow &window) {
     set_next_piece();
     sf::RectangleShape cell(sf::Vector2f(cell_size-1,cell_size-1));
     set_table();
-    show_screen(window,table);
+    show_screen(window);
     bool play=true;
     int counter=0;
     while(play) {
@@ -470,37 +498,37 @@ void game_table::play_game(sf::RenderWindow &window) {
         }
         int frame_counter=0;
         while (ver) {
-            show_screen(window, table);
+            show_screen(window);
             frame_counter++;
             if(frame_counter%20==0){
-                if(verrify_collision(1,table)==true)
-                    pieces_move_down(table, current_piece);
-                show_screen(window, table);
+                if(verrify_collision(1)==true)
+                    pieces_move_down();
+                show_screen(window);
                 counter++;
                 frame_counter=0;
             }
             if(frame_counter%5==0){
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))  {
-                    if(verrify_collision(2,table))
-                        pieces_move_right(table,current_piece);
+                    if(verrify_collision(2))
+                        pieces_move_right();
 
                 }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && verrify_collision(3,table))
-                    pieces_move_left(table,current_piece);
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)&& verrify_collision(1,table))
-                    pieces_move_down(table,current_piece);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && verrify_collision(3))
+                    pieces_move_left();
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)&& verrify_collision(1))
+                    pieces_move_down();
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-                    pieces_goto_end(table,current_piece);
+                    pieces_goto_end();
                 }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && verrify_rotate(table)){
-                    pieces_rotate(table,current_piece);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && verrify_rotate()){
+                    pieces_rotate();
                 }
 
             }
-            if (verrify_collision(1,table)==false) {
+            if (verrify_collision(1)==false) {
                 ver = false;
                 current_piece.pop_back();
-                int lines= delete_lines(table);
+                int lines= delete_lines();
                 if(lines>0){
                     scoring(lines);
 
@@ -512,7 +540,7 @@ void game_table::play_game(sf::RenderWindow &window) {
 
             }
         }
-        if(!verify_game(table))
+        if(!verify_game())
             play=false;
         if(counter==20)
             frame_counter=0;

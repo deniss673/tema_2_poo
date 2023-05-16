@@ -26,7 +26,6 @@ public:
     pieces& operator=(const pieces& other);
     virtual ~pieces(){}
     virtual void rotate_piece(std::shared_ptr<pieces>& piece)=0;
-    virtual std::vector<int> next_rotate(std::shared_ptr<pieces>& piece)=0;
     void move_down();
     std::vector<int> get_big_shape();
     void set_big_shape(const std::vector<int>& bp);

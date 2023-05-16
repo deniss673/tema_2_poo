@@ -56,19 +56,10 @@ void t_tetromino::rotate_piece(std::shared_ptr<pieces> &tPtr) {
     tPtr->set_rotate(x);
 }
 
-std::vector<int> t_tetromino::next_rotate(std::shared_ptr<pieces>& tPtr) {
-    int x=tPtr->get_rotate()+1;
-    x=x%tPtr->get_number_rotate();
-    if(x==0){
-        return {1,0,1,1,1,0};
-    }
-    else if(x==1){
-        return {1,1,1,0,1,0};
-    }
-    else if(x==2){
-        return {0,1,1,1,0,1};
-    }
-    else{
-        return {0,1,0,1,1,1};
-    }
+std::shared_ptr<pieces> t_tetromino::clone() const {
+    std::shared_ptr<pieces> cloned = std::make_shared<t_tetromino>(*this);
+    set_t_tetromino(cloned);
+    return cloned;
 }
+
+

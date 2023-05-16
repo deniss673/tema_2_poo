@@ -16,15 +16,16 @@ class z_tetromino : public pieces{
     int rotate;
     int number_rotate;
     std::vector <int> big_shape;
+    static void set_z_tetromino(std::shared_ptr<pieces> &zPtr);
 public:
     z_tetromino();
     ~z_tetromino();
     z_tetromino(sf::Vector2i position_, sf::Color color_,const std::vector<int>& shape_, int size_o_,int size_v_,int rotate_, int number_rotate_,const std::vector<int>& big_shape_);
     z_tetromino(const z_tetromino& other);
     z_tetromino& operator=(const z_tetromino& other);
-    static void set_z_tetromino(std::shared_ptr<pieces> &zPtr);
     void rotate_piece(std::shared_ptr<pieces>& zPtr) override;
-    std::vector<int> next_rotate(std::shared_ptr<pieces>& zPtr) override;
+    std::shared_ptr<pieces> clone() const;
+
 };
 
 

@@ -19,6 +19,7 @@ reverse_z &reverse_z::operator=(const reverse_z &other) {
         shape = other.shape;
         rotate = other.rotate;
         number_rotate = other.number_rotate;
+
     }
     return *this;
 }
@@ -50,14 +51,11 @@ void reverse_z::rotate_piece(std::shared_ptr<pieces> &r_zPtr) {
     r_zPtr->set_rotate(x);
 }
 
-std::vector<int> reverse_z::next_rotate(std::shared_ptr<pieces> &r_zPtr) {
-    int x=r_zPtr->get_rotate()+1;
-    x=x%r_zPtr->get_number_rotate();
-    if(x==0){
-        return {1,0,1,1,0,1};
-    }
-    else{
-        return {0,1,1,1,1,0};
-    }
+std::shared_ptr<pieces> reverse_z::clone() const {
+    std::shared_ptr<pieces> cloned = std::make_shared<reverse_z>(*this);
+    set_reverse_z(cloned);
+    return cloned;
 }
+
+
 
