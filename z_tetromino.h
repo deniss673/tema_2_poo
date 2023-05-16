@@ -25,7 +25,6 @@ public:
     z_tetromino& operator=(const z_tetromino& other);
     void rotate_piece(std::shared_ptr<pieces>& zPtr) override;
     std::shared_ptr<pieces> clone() const;
-
 };
 
 #endif //OOP_Z_TETROMINO_H
