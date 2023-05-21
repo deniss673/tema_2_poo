@@ -170,8 +170,8 @@ void game_table::setcolor(sf::RectangleShape &cell, int number) {
     cell.setFillColor(color);
 }
 
-bool game_table::verrify_collision(int x) {
-    if(x==1){
+bool game_table::verrify_collision_down() {
+
         std::vector<int> shape=current_piece[0]->get_shape();
         int poz=(current_piece[0]->get_position().y+current_piece[0]->Size_v())*10+current_piece[0]->get_position().x;
         for(int i=0;i<current_piece[0]->Size_o();i++){
@@ -196,10 +196,11 @@ bool game_table::verrify_collision(int x) {
             aux++;
             poz=aux;
         }
+    return true;
     }
 
 
-    else if(x==2){
+bool game_table::verrify_collision_right(){
         std::vector<int> shape=current_piece[0]->get_shape();
         int poz=(current_piece[0]->get_position().y)*10+current_piece[0]->get_position().x+current_piece[0]->Size_o();
         int shape_size=shape.size();
@@ -233,8 +234,9 @@ bool game_table::verrify_collision(int x) {
             aux=aux+10;
             poz=aux;
         }
+    return true;
     }
-    else if(x==3){
+bool game_table::verrify_collision_left(){
         std::vector<int> shape=current_piece[0]->get_shape();
         int poz=(current_piece[0]->get_position().y)*10+current_piece[0]->get_position().x-1;
         for(auto i=0ull;i<shape.size();i=i+current_piece[0]->Size_o()){
@@ -261,16 +263,16 @@ bool game_table::verrify_collision(int x) {
             aux=aux+10;
             poz=aux;
         }
-    }
     return true;
-}
+    }
+
 
 bool game_table::verrify_rotate() {
     int size_v=current_piece[0]->Size_o();
     int size_o=current_piece[0]->Size_v();
 
     sf::Vector2i position=current_piece[0]->get_position();
-    if(size_v<size_o && verrify_collision(2)==false){
+    if(size_v<size_o && verrify_collision_right()==false){
         return false;
     }
     if(size_v==1){
@@ -376,7 +378,7 @@ void game_table::pieces_rotate() {
 }
 
 void game_table::pieces_goto_end() {
-    while(verrify_collision(1)){
+    while(verrify_collision_down()){
         pieces_move_down();
     }
 }
@@ -499,31 +501,43 @@ void game_table::play_game(sf::RenderWindow &window) {
             show_screen(window);
             frame_counter++;
             if(frame_counter%20==0){
-                if(verrify_collision(1)==true)
+                if(verrify_collision_down()==true)
                     pieces_move_down();
                 show_screen(window);
                 counter++;
                 frame_counter=0;
             }
             if(frame_counter%5==0){
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))  {
-                    if(verrify_collision(2))
-                        pieces_move_right();
-
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && verrify_collision(3))
-                    pieces_move_left();
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)&& verrify_collision(1))
-                    pieces_move_down();
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-                    pieces_goto_end();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && verrify_rotate()){
-                    pieces_rotate();
+                try{
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))  {
+                        if(verrify_collision_right())
+                            pieces_move_right();
+                        else throw InvalidMoveException();
+                    }
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                        if (verrify_collision_left())
+                            pieces_move_left();
+                        else
+                            throw InvalidMoveException();
+                    }
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                        if (verrify_collision_down())
+                            pieces_move_down();
+                    }
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+                        pieces_goto_end();
+                    }
+                    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                        if(verrify_rotate())
+                            pieces_rotate();
+                        else throw InvalidRotate();
+                    }
+                }catch (const Exception& e){
+                    std::cout<<"Error: "<<e.what()<<"\n";
                 }
 
             }
-            if (verrify_collision(1)==false) {
+            if (verrify_collision_down()==false) {
                 ver = false;
                 current_piece.pop_back();
                 int lines= delete_lines();

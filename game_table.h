@@ -42,7 +42,11 @@ private:
 
     void setcolor(sf::RectangleShape &cell,int number);
 
-    bool verrify_collision(int x);
+    bool verrify_collision_right();
+
+    bool verrify_collision_left();
+
+    bool verrify_collision_down();
 
     bool verrify_rotate();
 

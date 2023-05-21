@@ -14,6 +14,7 @@ private:
     std::string message;
 public:
     explicit Exception(const std::string& message_);
+    virtual const char* what() const noexcept override;
 
 };
 class FontNotFound : public Exception{
@@ -24,6 +25,13 @@ class WindowNotOpened : public Exception{
 public:
     WindowNotOpened(): Exception("The window could not be opened"){}
 };
-
+class InvalidMoveException : public Exception {
+public:
+    InvalidMoveException(): Exception("Invalid move!"){}
+};
+class InvalidRotate : public Exception {
+public:
+    InvalidRotate(): Exception("Can not rotate the piece here!"){}
+};
 
 #endif //OOP_EXCEPTION_H
