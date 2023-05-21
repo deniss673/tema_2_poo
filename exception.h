@@ -34,4 +34,5 @@ public:
     InvalidRotate(): Exception("Can not rotate the piece here!"){}
 };
 
+
 #endif //OOP_EXCEPTION_H

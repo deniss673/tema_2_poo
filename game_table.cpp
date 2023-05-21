@@ -47,10 +47,7 @@ void game_table::set_next_piece() {
         this->next_piece.push_back(reverse_z().clone());
     }
     else if(g_piece==gsquare){
-        pieces* ptrPieces= new square();
-        square* ptrSquare=dynamic_cast<square*>(ptrPieces);
-        this->next_piece.emplace_back(ptrSquare);
-        square::setsquare(this->next_piece[0]);
+        this->next_piece.push_back(square().clone());
     }
     else if(g_piece==gz_tetromino){
         this->next_piece.push_back(z_tetromino().clone());
