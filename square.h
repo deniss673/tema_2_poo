@@ -16,7 +16,6 @@ private:
     int size_o;
     int size_v;
     std::vector <int> big_shape;
-    static void setsquare(std::shared_ptr<pieces> &squarePtr);
 public:
     square();
     ~square();
@@ -27,6 +26,7 @@ public:
         squarePtr->set_shape(squarePtr->get_shape());
     }
     std::shared_ptr<pieces> clone() const;
+    static void setsquare(std::shared_ptr<pieces> &squarePtr);
 };
 
 #endif //OOP_SQUARE_H

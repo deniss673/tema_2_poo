@@ -47,7 +47,10 @@ void game_table::set_next_piece() {
         this->next_piece.push_back(reverse_z().clone());
     }
     else if(g_piece==gsquare){
-        this->next_piece.push_back(square().clone());
+        pieces* ptrPieces= new square();
+        square* ptrSquare=dynamic_cast<square*>(ptrPieces);
+        this->next_piece.emplace_back(ptrSquare);
+        square::setsquare(this->next_piece[0]);
     }
     else if(g_piece==gz_tetromino){
         this->next_piece.push_back(z_tetromino().clone());
@@ -55,51 +58,6 @@ void game_table::set_next_piece() {
     else if(g_piece==gt_tetromino){
         this->next_piece.push_back(t_tetromino().clone());
     }
-
-    /*
-    if(random==1) {
-        pieces* ptrPieces= new square();
-        square* ptrSquare=dynamic_cast<square*>(ptrPieces);
-        next_piece.emplace_back(ptrSquare);
-        square::setsquare(next_piece[0]);
-    }
-    else if(random==2) {
-        pieces* ptrPieces= new l_tetromino();
-        l_tetromino* ptrL=dynamic_cast<l_tetromino*>(ptrPieces);
-        next_piece.emplace_back(ptrL);
-        l_tetromino::set_l_tetromino(next_piece[0]);
-    }
-    else if(random==3){
-        pieces* ptrPieces= new z_tetromino();
-        z_tetromino* zPtr=dynamic_cast<z_tetromino*>(ptrPieces);
-        next_piece.emplace_back(zPtr);
-        z_tetromino::set_z_tetromino(next_piece[0]);
-    }
-    else if(random==4){
-        pieces* ptrPieces=new t_tetromino();
-        t_tetromino* tPtr=dynamic_cast<t_tetromino*>(ptrPieces);
-        next_piece.emplace_back(tPtr);
-        t_tetromino::set_t_tetromino(next_piece[0]);
-    }
-    else if(random==5){
-        pieces* ptrPieces= new line();
-        line* linePtr=dynamic_cast<line*>(ptrPieces);
-        next_piece.emplace_back(linePtr);
-        line::setline(next_piece[0]);
-    }
-    else if(random==6){
-        pieces* ptrPieces= new reverse_l;
-        reverse_l* rlPtr=dynamic_cast<reverse_l*>(ptrPieces);
-        next_piece.emplace_back(rlPtr);
-        reverse_l::set_reverse_l(next_piece[0]);
-    }
-    else if(random==7){
-        pieces* ptrPieces= new reverse_z;
-        reverse_z* rzPtr=dynamic_cast<reverse_z*>(ptrPieces);
-        next_piece.emplace_back(rzPtr);
-        reverse_z::set_reverse_z(next_piece[0]);
-    }
-     */
 }
 
 int game_table::return_number(sf::Color color) {
